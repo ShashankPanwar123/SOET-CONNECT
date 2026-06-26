@@ -1,4 +1,40 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+
+const PILLS = [
+  { label: "🤖 AI Chatbot",          to: "/ai-chat",      color: "rgba(79,70,229,0.35)",   border: "rgba(99,102,241,0.6)"  },
+  { label: "📢 Smart Notices",        to: "/notice-board", color: "rgba(14,165,233,0.3)",   border: "rgba(56,189,248,0.6)"  },
+  { label: "🔐 Role-Based Access",    to: "/login",        color: "rgba(16,185,129,0.3)",   border: "rgba(52,211,153,0.6)"  },
+  { label: "📊 Analytics Dashboard",  to: "/login",        color: "rgba(245,158,11,0.3)",   border: "rgba(251,191,36,0.6)"  },
+];
+
+function FeaturePill({ label, to, color, border }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <Link
+      to={to}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        background: hovered ? color : "rgba(255,255,255,0.06)",
+        border: `1px solid ${hovered ? border : "rgba(255,255,255,0.1)"}`,
+        color: hovered ? "#fff" : "#94a3b8",
+        padding: "8px 20px",
+        borderRadius: "20px",
+        fontSize: "13px",
+        fontWeight: "600",
+        cursor: "pointer",
+        transition: "all 0.22s ease",
+        boxShadow: hovered ? `0 0 14px ${color}` : "none",
+        textDecoration: "none",
+        display: "inline-block",
+        letterSpacing: "0.01em",
+      }}
+    >
+      {label}
+    </Link>
+  );
+}
 
 function Home() {
   return (
@@ -101,21 +137,8 @@ function Home() {
 
         {/* Feature Pills */}
         <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center", marginTop: "56px" }}>
-          {["🤖 AI Chatbot", "📢 Smart Notices", "🔐 Role-Based Access", "📊 Analytics Dashboard"].map((f) => (
-            <span
-              key={f}
-              style={{
-                background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(255,255,255,0.1)",
-                color: "#94a3b8",
-                padding: "8px 18px",
-                borderRadius: "20px",
-                fontSize: "13px",
-                fontWeight: "500",
-              }}
-            >
-              {f}
-            </span>
+          {PILLS.map((p) => (
+            <FeaturePill key={p.label} {...p} />
           ))}
         </div>
       </div>
